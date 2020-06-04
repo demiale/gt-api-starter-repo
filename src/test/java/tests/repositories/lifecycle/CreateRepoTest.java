@@ -122,8 +122,6 @@ public class CreateRepoTest extends RequestConfiguration {
         assertThat(retrievedRepo.isPrivate(), equalTo(true));
         assertThat(retrievedRepo.getDescription(), equalTo(description));
 
-        deleteRepo(DEFAULT_REPO_NAME);
-
     }
 
 
@@ -133,8 +131,6 @@ public class CreateRepoTest extends RequestConfiguration {
         postPrivateRepoStatus(DEFAULT_REPO_NAME);
 
         assertThat(postRepo(DEFAULT_REPO_NAME), equalTo(UNPROCESSABLE_ENTITY));
-
-        deleteRepo(DEFAULT_REPO_NAME);
 
     }
 
@@ -151,8 +147,6 @@ public class CreateRepoTest extends RequestConfiguration {
 
         assertThat(postRepoWithNonExistingFieldStatus(DEFAULT_REPO_NAME), equalTo(CREATED));
         assertThat(getRepo(DEFAULT_REPO_NAME), equalTo(OK));
-
-        deleteRepo(DEFAULT_REPO_NAME);
 
     }
 
