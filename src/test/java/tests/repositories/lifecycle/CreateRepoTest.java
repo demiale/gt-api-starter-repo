@@ -2,6 +2,7 @@ package tests.repositories.lifecycle;
 
 import common.config.RequestConfiguration;
 import entities.Repo;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
@@ -95,7 +96,7 @@ public class CreateRepoTest extends RequestConfiguration {
 
         assertThat(retrievedRepo.getName(), equalTo(DEFAULT_REPO_NAME));
         assertThat(retrievedRepo.isPrivate(), equalTo(false));
-        assertThat(retrievedRepo.getDescription(), equalTo(""));
+        assertThat(retrievedRepo.getDescription(), equalTo(null));
         assertThat(retrievedRepo.getFullName(), equalTo(user + "/" + DEFAULT_REPO_NAME));
         assertThat(retrievedRepo.getOwner().getLogin(), equalTo(user));
 
@@ -103,7 +104,6 @@ public class CreateRepoTest extends RequestConfiguration {
             assertThat(value, equalTo(true));
         }
 
-        deleteRepo(DEFAULT_REPO_NAME);
     }
 
 
@@ -168,5 +168,10 @@ public class CreateRepoTest extends RequestConfiguration {
         assertThat(postRepoWithPatchStatus(DEFAULT_REPO_NAME), equalTo(NOT_FOUND));
     }
 
+
+    @AfterMethod
+    void deleteRepoWithDefaultName() {
+        deleteRepo(DEFAULT_REPO_NAME);
+    }
 }
 
