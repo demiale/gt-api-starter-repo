@@ -1,6 +1,7 @@
 package entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 
@@ -14,18 +15,24 @@ import java.util.Map;
 public class Repo {
 
     private int id;
+    //@JsonProperty("node_id")
     private String nodeId;
     private String name;
+    //@JsonProperty("full_name")
     private String fullName;
+    @JsonProperty("private")
     private boolean isPrivate;
-    private boolean isTemplate;
     private String description;
     private String language;
+
+    //@JsonProperty("created_at")
     private LocalDateTime createdAt;
+    //@JsonProperty("updated_at")
     private LocalDateTime updatedAt;
+    //@JsonProperty("pushed_at")
     private LocalDateTime pushedAt;
     private User owner;
-    private Map<String, String> permissions;
+    private Map<String, Boolean> permissions;
 
     private Repo(){}
 
@@ -36,7 +43,6 @@ public class Repo {
         this.name = repoBuilder.name;
         this.fullName = repoBuilder.fullName;
         this.isPrivate = repoBuilder.isPrivate;
-        this.isTemplate = repoBuilder.isTemplate;
         this.description = repoBuilder.description;
         this.language = repoBuilder.language;
         this.createdAt = repoBuilder.createdAt;
@@ -80,7 +86,7 @@ public class Repo {
         return owner;
     }
 
-    public Map<String, String> getPermissions() {
+    public Map<String, Boolean> getPermissions() {
         return permissions;
     }
 
@@ -108,9 +114,6 @@ public class Repo {
         this.pushedAt = parseDateFromString(pushedAt);
     }
 
-    public boolean isTemplate() {
-        return isTemplate;
-    }
 
     private LocalDateTime parseDateFromString(String strToParse) {
         return LocalDateTime.parse(strToParse.substring(0, strToParse.length()-1), DateTimeFormatter.ISO_LOCAL_DATE_TIME);
@@ -121,8 +124,8 @@ public class Repo {
 
         return String
                 .format("%n Repo name: %s%n Id: %s%n Is private: %s%n Node: %s%n " +
-                                "Full Name: %s%n Permissions: %s%n Description: %s%n Language: %s%n Is template: %s%n Owner: %s",
-                        name, id, isPrivate, nodeId, fullName, permissions, description, language, isTemplate, owner);
+                                "Full Name: %s%n Permissions: %s%n Description: %s%n Language: %s%n Owner: %s",
+                        name, id, isPrivate, nodeId, fullName, permissions, description, language, owner);
 
     }
 
@@ -136,14 +139,13 @@ public class Repo {
         private String name;
         private String fullName;
         private boolean isPrivate;
-        private boolean isTemplate;
         private String description;
         private String language;
         private LocalDateTime createdAt;
         private LocalDateTime updatedAt;
         private LocalDateTime pushedAt;
         private User owner;
-        private Map<String, String> permissions;
+        private Map<String, Boolean> permissions;
 
 
         public Repo build() {
@@ -172,11 +174,6 @@ public class Repo {
 
         public RepoBuilder isPrivate(boolean isPrivate) {
             this.isPrivate = isPrivate;
-            return this;
-        }
-
-        public RepoBuilder isTemplate(boolean isTemplate) {
-            this.isTemplate = isTemplate;
             return this;
         }
 
@@ -210,7 +207,7 @@ public class Repo {
             return this;
         }
 
-        public RepoBuilder permissions(Map<String, String> permissions) {
+        public RepoBuilder permissions(Map<String, Boolean> permissions) {
             this.permissions = permissions;
             return this;
         }
