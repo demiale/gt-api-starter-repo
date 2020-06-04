@@ -15,21 +15,15 @@ import java.util.Map;
 public class Repo {
 
     private int id;
-    //@JsonProperty("node_id")
     private String nodeId;
     private String name;
-    //@JsonProperty("full_name")
     private String fullName;
     @JsonProperty("private")
     private boolean isPrivate;
     private String description;
     private String language;
-
-    //@JsonProperty("created_at")
     private LocalDateTime createdAt;
-    //@JsonProperty("updated_at")
     private LocalDateTime updatedAt;
-    //@JsonProperty("pushed_at")
     private LocalDateTime pushedAt;
     private User owner;
     private Map<String, Boolean> permissions;
