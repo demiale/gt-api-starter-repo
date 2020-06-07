@@ -28,12 +28,8 @@ public final class ResultsRetriever {
 
     public static <T> List<T> retrieveEntities(Class<T> type, RequestSpecification requestSpec, String endpointURI) {
 
-        String linkHeader = getLinkHeader(requestSpec, endpointURI);
-
-        if (linkHeader == null)
-            return retrieveSinglePageResult(type, requestSpec, endpointURI);
-        else
-            return retrieveMultiPageResult(type, requestSpec, linkHeader, getPageCount(linkHeader));
+        return
+                retrieveEntities(type, requestSpec, endpointURI, getPageCount(getLinkHeader(requestSpec, endpointURI)));
 
     }
 
