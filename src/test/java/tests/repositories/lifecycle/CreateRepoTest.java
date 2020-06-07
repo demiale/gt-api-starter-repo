@@ -74,7 +74,7 @@ public class CreateRepoTest extends RequestConfiguration {
 
 
     @Test
-    void repoWithWithoutNameNotCreated() {
+    void repoWithoutNameNotCreated() {
 
         Repo repo = new Repo.RepoBuilder().
                 name(null).description("名称").isPrivate(true).build();
