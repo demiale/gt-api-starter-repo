@@ -7,9 +7,9 @@ import static io.restassured.RestAssured.given;
 
 public class RepoUtils {
 
-    static String repoBodyTemplate = "{\"name\": \"%s\"}";
-    static String repoBrokenBodyTemplate = "{\"name\" \"%s\"}";
-    static String repoBodyWrongFieldTemplate = "{\"name\": \"%s\", \"some_non_existing_field\": \"some_non_existing_field_value\"}";
+    final static String repoBodyTemplate = "{\"name\": \"%s\"}";
+    final static String repoBrokenBodyTemplate = "{\"name\" \"%s\"}";
+    final static String repoBodyWrongFieldTemplate = "{\"name\": \"%s\", \"some_non_existing_field\": \"some_non_existing_field_value\"}";
 
     public static int postRepo(String repoName) {
 
