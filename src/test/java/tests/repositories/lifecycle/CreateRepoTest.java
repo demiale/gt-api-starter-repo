@@ -9,8 +9,7 @@ import org.testng.annotations.Test;
 import static common.constants.ResponseCode.*;
 import static common.util.RepoUtils.*;
 import static io.restassured.RestAssured.requestSpecification;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.equalTo;
+import static org.testng.Assert.*;
 
 
 public class CreateRepoTest extends RequestConfiguration {
@@ -27,9 +26,9 @@ public class CreateRepoTest extends RequestConfiguration {
     @Test(dataProvider = "repoNameProvider", groups = "nameCheckCleanup")
     void repoWithValidNameCreated(String repoName) {
 
-        assertThat(postRepo(repoName), equalTo(CREATED));
+        assertEquals(postRepo(repoName), CREATED);
 
-        assertThat(getRepo(repoName), equalTo(OK));
+        assertEquals(getRepo(repoName), OK);
 
     }
 
@@ -38,10 +37,10 @@ public class CreateRepoTest extends RequestConfiguration {
     void privateRepoNotCreatedWithPublicScopeToken() {
 
         requestSpecification.auth().oauth2(token_public_repo);
-        assertThat(postPrivateRepoStatus(DEFAULT_REPO_NAME), equalTo(FORBIDDEN));
+        assertEquals(postPrivateRepoStatus(DEFAULT_REPO_NAME), FORBIDDEN);
 
         requestSpecification.auth().oauth2(token_all);
-        assertThat(getRepo(DEFAULT_REPO_NAME), equalTo(NOT_FOUND));
+        assertEquals(getRepo(DEFAULT_REPO_NAME), NOT_FOUND);
 
     }
 
@@ -50,10 +49,10 @@ public class CreateRepoTest extends RequestConfiguration {
     void publicRepoNotCreatedWithNoPublicRepoScopeToken() {
 
         requestSpecification.auth().oauth2(token_no_public_repo);
-        assertThat(postRepo(DEFAULT_REPO_NAME), equalTo(NOT_FOUND));
+        assertEquals(postRepo(DEFAULT_REPO_NAME), NOT_FOUND);
 
         requestSpecification.auth().oauth2(token_all);
-        assertThat(getRepo(DEFAULT_REPO_NAME), equalTo(NOT_FOUND));
+        assertEquals(getRepo(DEFAULT_REPO_NAME), NOT_FOUND);
 
     }
 
@@ -64,10 +63,10 @@ public class CreateRepoTest extends RequestConfiguration {
 
         requestSpecification.auth().oauth2(token_invalid);
 
-        assertThat(postRepo(DEFAULT_REPO_NAME), equalTo(UNAUTHORIZED));
+        assertEquals(postRepo(DEFAULT_REPO_NAME), UNAUTHORIZED);
 
         requestSpecification.auth().oauth2(token_all);
-        assertThat(getRepo(DEFAULT_REPO_NAME), equalTo(NOT_FOUND));
+        assertEquals(getRepo(DEFAULT_REPO_NAME), NOT_FOUND);
 
     }
 
@@ -78,7 +77,7 @@ public class CreateRepoTest extends RequestConfiguration {
         Repo repo = new Repo.RepoBuilder().
                 name(null).description("名称").isPrivate(true).build();
 
-        assertThat(postRepo(repo), equalTo(UNPROCESSABLE_ENTITY));
+        assertEquals(postRepo(repo), UNPROCESSABLE_ENTITY);
 
     }
 
@@ -92,14 +91,14 @@ public class CreateRepoTest extends RequestConfiguration {
 
         Repo retrievedRepo = getRepoEntity(DEFAULT_REPO_NAME);
 
-        assertThat(retrievedRepo.getName(), equalTo(DEFAULT_REPO_NAME));
-        assertThat(retrievedRepo.isPrivate(), equalTo(false));
-        assertThat(retrievedRepo.getDescription(), equalTo(null));
-        assertThat(retrievedRepo.getFullName(), equalTo(user + "/" + DEFAULT_REPO_NAME));
-        assertThat(retrievedRepo.getOwner().getLogin(), equalTo(user));
+        assertEquals(retrievedRepo.getName(), DEFAULT_REPO_NAME);
+        assertFalse(retrievedRepo.isPrivate());
+        assertNull(retrievedRepo.getDescription());
+        assertEquals(retrievedRepo.getFullName(), user + "/" + DEFAULT_REPO_NAME);
+        assertEquals(retrievedRepo.getOwner().getLogin(), user);
 
         for (boolean value : retrievedRepo.getPermissions().values()) {
-            assertThat(value, equalTo(true));
+            assertTrue(value);
         }
 
     }
@@ -116,9 +115,9 @@ public class CreateRepoTest extends RequestConfiguration {
 
         Repo retrievedRepo = getRepoEntity(DEFAULT_REPO_NAME);
 
-        assertThat(retrievedRepo.getName(), equalTo(DEFAULT_REPO_NAME));
-        assertThat(retrievedRepo.isPrivate(), equalTo(true));
-        assertThat(retrievedRepo.getDescription(), equalTo(description));
+        assertEquals(retrievedRepo.getName(), DEFAULT_REPO_NAME);
+        assertTrue(retrievedRepo.isPrivate());
+        assertEquals(retrievedRepo.getDescription(), description);
 
     }
 
@@ -128,36 +127,36 @@ public class CreateRepoTest extends RequestConfiguration {
 
         postPrivateRepoStatus(DEFAULT_REPO_NAME);
 
-        assertThat(postRepo(DEFAULT_REPO_NAME), equalTo(UNPROCESSABLE_ENTITY));
+        assertEquals(postRepo(DEFAULT_REPO_NAME), UNPROCESSABLE_ENTITY);
 
     }
 
 
     @Test
     void createRepoWithBrokenJsonFails() {
-        assertThat(postRepoWithBrokenBodyStatus(DEFAULT_REPO_NAME), equalTo(BAD_REQUEST));
-        assertThat(getRepo(DEFAULT_REPO_NAME), equalTo(NOT_FOUND));
+        assertEquals(postRepoWithBrokenBodyStatus(DEFAULT_REPO_NAME), BAD_REQUEST);
+        assertEquals(getRepo(DEFAULT_REPO_NAME), NOT_FOUND);
     }
 
 
     @Test(groups = "defaultCleanup")
     void createRepoNonExistingJsonFieldIgnored() {
 
-        assertThat(postRepoWithNonExistingFieldStatus(DEFAULT_REPO_NAME), equalTo(CREATED));
-        assertThat(getRepo(DEFAULT_REPO_NAME), equalTo(OK));
+        assertEquals(postRepoWithNonExistingFieldStatus(DEFAULT_REPO_NAME), CREATED);
+        assertEquals(getRepo(DEFAULT_REPO_NAME), OK);
 
     }
 
 
     @Test
     void createRepoWithPutFails() {
-        assertThat(postRepoWithPutStatus(DEFAULT_REPO_NAME), equalTo(NOT_FOUND));
+        assertEquals(postRepoWithPutStatus(DEFAULT_REPO_NAME), NOT_FOUND);
     }
 
 
     @Test
     void createRepoWithPatchFails() {
-        assertThat(postRepoWithPatchStatus(DEFAULT_REPO_NAME), equalTo(NOT_FOUND));
+        assertEquals(postRepoWithPatchStatus(DEFAULT_REPO_NAME), NOT_FOUND);
     }
 
 
