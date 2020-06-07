@@ -7,13 +7,14 @@ import static io.restassured.RestAssured.given;
 
 public class RepoUtils {
 
+    static String repoBodyTemplate = "{\"name\": \"%s\"}";
+    static String repoBrokenBodyTemplate = "{\"name\" \"%s\"}";
+    static String repoBodyWrongFieldTemplate = "{\"name\": \"%s\", \"some_non_existing_field\": \"some_non_existing_field_value\"}";
 
     public static int postRepo(String repoName) {
 
-        String bodyTemplate = "{\"name\": \"%s\"}";
-
         return
-                given().log().all().body(String.format(bodyTemplate, repoName))
+                given().log().all().body(String.format(repoBodyTemplate, repoName))
                         .post(REPOS_URI_GET_POST_CURRENT_USER).then().extract().statusCode();
     }
 
@@ -38,12 +39,15 @@ public class RepoUtils {
 
 
     public static int getRepo(String repoName) {
+
         return
                 given().log().all()
                         .get(REPO_URI_GET_PATCH_DELETE_SPECIFIC_USER, user, repoName).then().extract().statusCode();
     }
 
+
     public static Repo getRepoEntity(String repoName) {
+
         return
                 given().log().all()
                         .get(REPO_URI_GET_PATCH_DELETE_SPECIFIC_USER, user, repoName).then().extract().response().as(Repo.class);
@@ -51,45 +55,41 @@ public class RepoUtils {
 
 
     public static int deleteRepo(String repoName) {
+
         return
                 given().log().all()
                         .delete(REPO_URI_GET_PATCH_DELETE_SPECIFIC_USER, user, repoName).then().extract().statusCode();
     }
 
+
     public static int postRepoWithPutStatus(String repoName) {
 
-        String bodyTemplate = "{\"name\": \"%s\"}";
-
         return
-                given().log().all().body(String.format(bodyTemplate, repoName))
+                given().log().all().body(String.format(repoBodyTemplate, repoName))
                         .put(REPOS_URI_GET_POST_CURRENT_USER).then().extract().statusCode();
     }
 
+
     public static int postRepoWithPatchStatus(String repoName) {
 
-        String bodyTemplate = "{\"name\": \"%s\"}";
-
         return
-                given().log().all().body(String.format(bodyTemplate, repoName))
+                given().log().all().body(String.format(repoBodyTemplate, repoName))
                         .patch(REPOS_URI_GET_POST_CURRENT_USER).then().extract().statusCode();
     }
 
+
     public static int postRepoWithBrokenBodyStatus(String repoName) {
 
-        String bodyTemplate = "{\"name\" \"%s\"}";
-
         return
-                given().log().all().body(String.format(bodyTemplate, repoName))
+                given().log().all().body(String.format(repoBrokenBodyTemplate, repoName))
                         .post(REPOS_URI_GET_POST_CURRENT_USER).then().extract().statusCode();
     }
 
 
     public static int postRepoWithNonExistingFieldStatus(String repoName) {
 
-        String bodyTemplate = "{\"name\": \"%s\", \"some_non_existing_field\": \"some_non_existing_field_value\"}";
-
         return
-                given().log().all().body(String.format(bodyTemplate, repoName))
+                given().log().all().body(String.format(repoBodyWrongFieldTemplate, repoName))
                         .post(REPOS_URI_GET_POST_CURRENT_USER).then().extract().statusCode();
     }
 
