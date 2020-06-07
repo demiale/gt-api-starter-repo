@@ -166,15 +166,12 @@ public class CreateRepoTest extends RequestConfiguration {
     */
     @AfterMethod(alwaysRun = true, onlyForGroups = "defaultCleanup")
     void deleteRepoWithDefaultName() {
-
-        System.out.println("default cleanup");
         deleteRepo(DEFAULT_REPO_NAME);
     }
 
 
     @AfterMethod(alwaysRun = true, onlyForGroups = "nameCheckCleanup")
     void deleteReposFromNameProviderGroup() {
-        System.out.println("deleting repos from provider - groups");
         Object[] created = repoNameProvider();
         for (Object name : created) {
             deleteRepo(name.toString());
