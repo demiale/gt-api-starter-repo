@@ -2,7 +2,6 @@ package tests.repositories.lifecycle;
 
 import common.config.RequestConfiguration;
 import entities.Repo;
-import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -25,7 +24,7 @@ public class CreateRepoTest extends RequestConfiguration {
 
 
 
-    @Test(dataProvider = "repoNameProvider")
+    @Test(dataProvider = "repoNameProvider", groups = "nameCheckCleanup")
     void repoWithValidNameCreated(String repoName) {
 
         assertThat(postRepo(repoName), equalTo(CREATED));
@@ -84,7 +83,7 @@ public class CreateRepoTest extends RequestConfiguration {
     }
 
 
-    @Test
+    @Test(groups = "defaultCleanup")
     void defaultValuesSetCorrectly() {
 
         Repo repo = new Repo.RepoBuilder().name(DEFAULT_REPO_NAME).build();
@@ -106,7 +105,7 @@ public class CreateRepoTest extends RequestConfiguration {
     }
 
 
-    @Test
+    @Test(groups = "defaultCleanup")
     void valuesSetCorrectly() {
 
         String description = "名称";
@@ -124,7 +123,7 @@ public class CreateRepoTest extends RequestConfiguration {
     }
 
 
-    @Test
+    @Test(groups = "defaultCleanup")
     void repoWithExistingNameNotCreated() {
 
         postPrivateRepoStatus(DEFAULT_REPO_NAME);
@@ -141,7 +140,7 @@ public class CreateRepoTest extends RequestConfiguration {
     }
 
 
-    @Test
+    @Test(groups = "defaultCleanup")
     void createRepoNonExistingJsonFieldIgnored() {
 
         assertThat(postRepoWithNonExistingFieldStatus(DEFAULT_REPO_NAME), equalTo(CREATED));
@@ -165,18 +164,22 @@ public class CreateRepoTest extends RequestConfiguration {
     /*TODO At the moment these clean-up methods are triggered after each test, though not in every test are needed.
        need to find right configuration to solve this issue. Leaving as is for now
     */
-    @AfterMethod(alwaysRun = true)
+    @AfterMethod(alwaysRun = true, onlyForGroups = "defaultCleanup")
     void deleteRepoWithDefaultName() {
+
+        System.out.println("default cleanup");
         deleteRepo(DEFAULT_REPO_NAME);
     }
 
-    @AfterClass(alwaysRun = true)
-    void deleteReposFromNameProvider() {
-        System.out.println("deleting repos from provider");
+
+    @AfterMethod(alwaysRun = true, onlyForGroups = "nameCheckCleanup")
+    void deleteReposFromNameProviderGroup() {
+        System.out.println("deleting repos from provider - groups");
         Object[] created = repoNameProvider();
         for (Object name : created) {
             deleteRepo(name.toString());
         }
     }
+
 }
 
