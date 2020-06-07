@@ -86,7 +86,6 @@ public final class ResultsRetriever {
     }
 
     private static String constructCurrentPageLink(String linkHeader, int currentPage) {
-        System.out.println(currentPage);
         return String.format(getBasePagePath(linkHeader) + "%d", currentPage);
     }
 
