@@ -94,7 +94,7 @@ public final class ResultsRetriever {
         return basePagePath.substring(0, basePagePath.lastIndexOf("page=") + 5); // get rid of magic number
     }
 
-    private static boolean checkIfResultsPaginated(RequestSpecification requestSpec, String endpointURI) {
+    private static boolean isResultPaginated(RequestSpecification requestSpec, String endpointURI) {
         return retrieveLinkHeader(requestSpec, endpointURI) != null;
     }
 
