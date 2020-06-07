@@ -2,6 +2,7 @@ package tests.repositories.lifecycle;
 
 import common.config.RequestConfiguration;
 import entities.Repo;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -169,7 +170,7 @@ public class CreateRepoTest extends RequestConfiguration {
         deleteRepo(DEFAULT_REPO_NAME);
     }
 
-    @AfterMethod(alwaysRun = true)
+    @AfterClass(alwaysRun = true)
     void deleteReposFromNameProvider() {
         System.out.println("deleting repos from provider");
         Object[] created = repoNameProvider();
