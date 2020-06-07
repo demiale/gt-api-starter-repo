@@ -31,8 +31,6 @@ public class CreateRepoTest extends RequestConfiguration {
 
         assertThat(getRepo(repoName), equalTo(OK));
 
-        deleteRepo(repoName);
-
     }
 
 
@@ -163,9 +161,21 @@ public class CreateRepoTest extends RequestConfiguration {
     }
 
 
-    @AfterMethod
+    /*TODO At the moment these clean-up methods are triggered after each test, though not in every test are needed.
+       need to find right configuration to solve this issue. Leaving as is for now
+    */
+    @AfterMethod(alwaysRun = true)
     void deleteRepoWithDefaultName() {
         deleteRepo(DEFAULT_REPO_NAME);
+    }
+
+    @AfterMethod(alwaysRun = true)
+    void deleteReposFromNameProvider() {
+        System.out.println("deleting repos from provider");
+        Object[] created = repoNameProvider();
+        for (Object name : created) {
+            deleteRepo(name.toString());
+        }
     }
 }
 
