@@ -50,7 +50,7 @@ public class User {
     }
 
     public User setUrl(String url) {
-        // validate url format
+        // TODO 15-Jun-2020 Validate url format
         this.url = url;
         return this;
     }

@@ -12,7 +12,7 @@ import static io.restassured.RestAssured.*;
 
 public final class ResultsRetriever {
 
-    public static <T> List<T> retrieveEntities (Class<T> type, RequestSpecification requestSpec, String endpointURI, int pageLimit) {
+    public static <T> List<T> retrieveEntities(Class<T> type, RequestSpecification requestSpec, String endpointURI, int pageLimit) {
 
         if (pageLimit < 1)
             throw new IllegalArgumentException("Page limit cannot be less than 1");

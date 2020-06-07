@@ -10,6 +10,8 @@ import static io.restassured.RestAssured.oauth2;
 
 public class RequestConfiguration {
 
+    // TODO 11-Jun-2020 Move to .properties
+    // TODO 11-Jun-2020 Add encrypt/decrypt methods
     public static final String user = "marinerro";
     public static final String password = "m@4ineRro";
 

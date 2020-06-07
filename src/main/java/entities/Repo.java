@@ -12,6 +12,9 @@ import java.util.Map;
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 
+// TODO 10-Jun-2020 Rename to RepoStrict, add RepoLoose with all String fields, add abstract parent Repo
+// this will allow to add test for validating incorrect attr values
+
 public class Repo {
 
     private int id;

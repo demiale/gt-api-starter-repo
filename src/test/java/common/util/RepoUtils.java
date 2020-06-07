@@ -13,8 +13,8 @@ public class RepoUtils {
         String bodyTemplate = "{\"name\": \"%s\"}";
 
         return
-        given().log().all().body(String.format(bodyTemplate, repoName))
-                .post(REPOS_URI_GET_POST_CURRENT_USER).then().extract().statusCode();
+                given().log().all().body(String.format(bodyTemplate, repoName))
+                        .post(REPOS_URI_GET_POST_CURRENT_USER).then().extract().statusCode();
     }
 
 
@@ -30,27 +30,36 @@ public class RepoUtils {
 
         Repo repo = new Repo.RepoBuilder().name(repoName).isPrivate(true).build();
 
-        return given().log().all().body(repo)
-                .post(REPOS_URI_GET_POST_CURRENT_USER).then().assertThat().extract().statusCode();
+        return
+                given().log().all().body(repo)
+                        .post(REPOS_URI_GET_POST_CURRENT_USER).then().assertThat().extract().statusCode();
 
     }
 
 
     public static int getRepo(String repoName) {
-        return given().log().all().get(REPO_URI_GET_PATCH_DELETE_SPECIFIC_USER, user, repoName).then().extract().statusCode();
+        return
+                given().log().all()
+                        .get(REPO_URI_GET_PATCH_DELETE_SPECIFIC_USER, user, repoName).then().extract().statusCode();
     }
 
     public static Repo getRepoEntity(String repoName) {
-        return given().log().all().get(REPO_URI_GET_PATCH_DELETE_SPECIFIC_USER, user, repoName).then().extract().response().as(Repo.class);
+        return
+                given().log().all()
+                        .get(REPO_URI_GET_PATCH_DELETE_SPECIFIC_USER, user, repoName).then().extract().response().as(Repo.class);
     }
 
 
     public static int deleteRepo(String repoName) {
-        return given().log().all().delete(REPO_URI_GET_PATCH_DELETE_SPECIFIC_USER, user, repoName).then().extract().statusCode();
+        return
+                given().log().all()
+                        .delete(REPO_URI_GET_PATCH_DELETE_SPECIFIC_USER, user, repoName).then().extract().statusCode();
     }
 
     public static int postRepoWithPutStatus(String repoName) {
+
         String bodyTemplate = "{\"name\": \"%s\"}";
+
         return
                 given().log().all().body(String.format(bodyTemplate, repoName))
                         .put(REPOS_URI_GET_POST_CURRENT_USER).then().extract().statusCode();
