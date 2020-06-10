@@ -9,6 +9,7 @@ import java.util.List;
 
 import static common.constants.HeaderParam.LINK;
 import static io.restassured.RestAssured.*;
+import static org.apache.http.HttpStatus.SC_OK;
 
 public final class ResultsRetriever {
 
@@ -49,7 +50,9 @@ public final class ResultsRetriever {
                             .get(constructCurrentPageLink(linkHeader, currentPage))
 
                             .then()
-                            .assertThat().statusCode(ResponseCode.OK)
+
+                            .assertThat().statusCode(SC_OK)
+
                             .extract().response().asString();
 
             JsonPath responsePath = new JsonPath(response);

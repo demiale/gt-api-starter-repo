@@ -5,22 +5,20 @@ import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.http.ContentType;
 import org.testng.annotations.BeforeMethod;
 
+import static common.config.CryptoUtils.decrypt;
 import static common.constants.HeaderParam.ACCEPT_API_VERSION;
 import static common.config.RequestConfigUtils.props;
 import static io.restassured.RestAssured.oauth2;
 
 public class RequestConfiguration {
 
-    // TODO 11-Jun-2020 Move to .properties
-    // TODO 11-Jun-2020 Add encrypt/decrypt methods
-
     public static final String user = props.getProperty("user");
-    public static final String password = props.getProperty("password");
-    public static final String token_all = props.getProperty("token_all");
-    public static final String token_private_repo = props.getProperty("token_private_repo");
-    public static final String token_public_repo = props.getProperty("token_public_repo");
-    public static final String token_delete_repo = props.getProperty("token_delete_repo");
-    public static final String token_no_public_repo = props.getProperty("token_no_public_repo");
+    public static final String password = decrypt(props.getProperty("password"));
+    public static final String token_all = decrypt(props.getProperty("token_all"));
+    public static final String token_private_repo = decrypt(props.getProperty("token_private_repo"));
+    public static final String token_public_repo = decrypt(props.getProperty("token_public_repo"));
+    public static final String token_delete_repo = decrypt(props.getProperty("token_delete_repo"));
+    public static final String token_no_public_repo = decrypt(props.getProperty("token_no_public_repo"));
 
     public static final String REPOS_URI_GET_POST_CURRENT_USER = "/user/repos"; // both GET and POST
     public static final String REPOS_URI_GET_SPECIFIC_USER = "/users/{username}/repos";
