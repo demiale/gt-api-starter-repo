@@ -90,7 +90,7 @@ public final class ResultsRetriever {
 
     private static String getBasePagePath(String linkHeader) {
         String basePagePath = getLastPageURI(linkHeader).replace(baseURI + "/", "");
-        return basePagePath.substring(0, basePagePath.lastIndexOf("page=") + 5); // get rid of magic number
+        return basePagePath.substring(0, basePagePath.lastIndexOf("page=") + "page=".length());
     }
 
     private static boolean isResultPaginated(RequestSpecification requestSpec, String endpointURI) {

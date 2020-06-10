@@ -15,7 +15,7 @@ public class RepoUtils {
 
         return
                 given().log().all().body(String.format(repoBodyTemplate, repoName))
-                        .post(REPOS_URI_GET_POST_CURRENT_USER).then().extract().statusCode();
+                        .post(URI_CURRENT_USER_REPO).then().extract().statusCode();
     }
 
 
@@ -23,7 +23,7 @@ public class RepoUtils {
 
         return
                 given().log().all().body(repo)
-                        .post(REPOS_URI_GET_POST_CURRENT_USER).then().log().all().extract().statusCode();
+                        .post(URI_CURRENT_USER_REPO).then().log().all().extract().statusCode();
     }
 
 
@@ -33,7 +33,7 @@ public class RepoUtils {
 
         return
                 given().log().all().body(repo)
-                        .post(REPOS_URI_GET_POST_CURRENT_USER).then().assertThat().extract().statusCode();
+                        .post(URI_CURRENT_USER_REPO).then().assertThat().extract().statusCode();
 
     }
 
@@ -42,7 +42,7 @@ public class RepoUtils {
 
         return
                 given().log().all()
-                        .get(REPO_URI_GET_PATCH_DELETE_SPECIFIC_USER, user, repoName).then().extract().statusCode();
+                        .get(URI_USER_SPECIFIC_REPO, user, repoName).then().extract().statusCode();
     }
 
 
@@ -50,7 +50,7 @@ public class RepoUtils {
 
         return
                 given().log().all()
-                        .get(REPO_URI_GET_PATCH_DELETE_SPECIFIC_USER, user, repoName).then().extract().response().as(Repo.class);
+                        .get(URI_USER_SPECIFIC_REPO, user, repoName).then().extract().response().as(Repo.class);
     }
 
 
@@ -58,7 +58,7 @@ public class RepoUtils {
 
         return
                 given().log().all()
-                        .delete(REPO_URI_GET_PATCH_DELETE_SPECIFIC_USER, user, repoName).then().extract().statusCode();
+                        .delete(URI_USER_SPECIFIC_REPO, user, repoName).then().extract().statusCode();
     }
 
 
@@ -66,7 +66,7 @@ public class RepoUtils {
 
         return
                 given().log().all().body(String.format(repoBodyTemplate, repoName))
-                        .put(REPOS_URI_GET_POST_CURRENT_USER).then().extract().statusCode();
+                        .put(URI_CURRENT_USER_REPO).then().extract().statusCode();
     }
 
 
@@ -74,7 +74,7 @@ public class RepoUtils {
 
         return
                 given().log().all().body(String.format(repoBodyTemplate, repoName))
-                        .patch(REPOS_URI_GET_POST_CURRENT_USER).then().extract().statusCode();
+                        .patch(URI_CURRENT_USER_REPO).then().extract().statusCode();
     }
 
 
@@ -82,7 +82,7 @@ public class RepoUtils {
 
         return
                 given().log().all().body(String.format(repoBrokenBodyTemplate, repoName))
-                        .post(REPOS_URI_GET_POST_CURRENT_USER).then().extract().statusCode();
+                        .post(URI_CURRENT_USER_REPO).then().extract().statusCode();
     }
 
 
@@ -90,7 +90,7 @@ public class RepoUtils {
 
         return
                 given().log().all().body(String.format(repoBodyWrongFieldTemplate, repoName))
-                        .post(REPOS_URI_GET_POST_CURRENT_USER).then().extract().statusCode();
+                        .post(URI_CURRENT_USER_REPO).then().extract().statusCode();
     }
 
 

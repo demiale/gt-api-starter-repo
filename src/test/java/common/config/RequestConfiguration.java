@@ -20,14 +20,14 @@ public class RequestConfiguration {
     public static final String token_delete_repo = decrypt(props.getProperty("token_delete_repo"));
     public static final String token_no_public_repo = decrypt(props.getProperty("token_no_public_repo"));
 
-    public static final String REPOS_URI_GET_POST_CURRENT_USER = "/user/repos"; // both GET and POST
-    public static final String REPOS_URI_GET_SPECIFIC_USER = "/users/{username}/repos";
-    public static final String REPOS_URI_GET_PUBLIC = "/repositories";
-    public static final String REPO_URI_GET_PATCH_DELETE_SPECIFIC_USER = "/repos/{owner}/{repo}"; // GET, PATCH, DELETE
+    public static final String BASE_URI = props.getProperty("base_uri");
 
-    public static final String CREATE_REPO_URI_FROM_TEMPLATE = "/repos/{template_owner}/{template_repo}/generate";
+    public static final String URI_CURRENT_USER_REPO = props.getProperty("uri_current_user_repo"); // both GET and POST
+    public static final String URI_USER_REPOS_ = props.getProperty("uri_user_repos");
+    public static final String URI_PUBLIC_REPOS = props.getProperty("uri_public_repos"); // list public repos
+    public static final String URI_USER_SPECIFIC_REPO = props.getProperty("uri_user_specific_repo"); // GET, PATCH, DELETE
 
-    public static final String BASE_URI = "https://api.github.com";
+    public static final String URI_REPO_FROM_TEMPLATE = props.getProperty("uri_repo_from_template");
 
     public static final String DEFAULT_REPO_NAME = "dummy";
 
