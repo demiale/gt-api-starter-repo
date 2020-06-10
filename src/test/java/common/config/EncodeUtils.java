@@ -3,13 +3,13 @@ package common.config;
 import static java.util.Base64.getDecoder;
 import static java.util.Base64.getEncoder;
 
-public class CryptoUtils {
+class EncodeUtils {
 
-    public static String encrypt(String toEncrypt) {
+    static String encode(String toEncrypt) {
         return getEncoder().encodeToString(toEncrypt.getBytes());
     }
 
-    public static String decrypt(String toDecrypt) {
+    static String decode(String toDecrypt) {
         return new String(getDecoder().decode(toDecrypt));
     }
 

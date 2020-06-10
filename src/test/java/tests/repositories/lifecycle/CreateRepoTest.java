@@ -6,9 +6,9 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
-import static common.constants.ResponseCode.*;
 import static common.util.RepoUtils.*;
 import static io.restassured.RestAssured.requestSpecification;
+import static org.apache.http.HttpStatus.*;
 import static org.testng.Assert.*;
 
 
@@ -26,9 +26,9 @@ public class CreateRepoTest extends RequestConfiguration {
     @Test(dataProvider = "repoNameProvider", groups = "nameCheckCleanup")
     void repoWithValidNameCreated(String repoName) {
 
-        assertEquals(postRepo(repoName), CREATED);
+        assertEquals(postRepo(repoName), SC_CREATED);
 
-        assertEquals(getRepo(repoName), OK);
+        assertEquals(getRepo(repoName), SC_OK);
 
     }
 
@@ -37,10 +37,10 @@ public class CreateRepoTest extends RequestConfiguration {
     void privateRepoNotCreatedWithPublicScopeToken() {
 
         requestSpecification.auth().oauth2(token_public_repo);
-        assertEquals(postPrivateRepoStatus(DEFAULT_REPO_NAME), FORBIDDEN);
+        assertEquals(postPrivateRepoStatus(DEFAULT_REPO_NAME), SC_FORBIDDEN);
 
         requestSpecification.auth().oauth2(token_all);
-        assertEquals(getRepo(DEFAULT_REPO_NAME), NOT_FOUND);
+        assertEquals(getRepo(DEFAULT_REPO_NAME), SC_NOT_FOUND);
 
     }
 
@@ -49,10 +49,10 @@ public class CreateRepoTest extends RequestConfiguration {
     void publicRepoNotCreatedWithNoPublicRepoScopeToken() {
 
         requestSpecification.auth().oauth2(token_no_public_repo);
-        assertEquals(postRepo(DEFAULT_REPO_NAME), NOT_FOUND);
+        assertEquals(postRepo(DEFAULT_REPO_NAME), SC_NOT_FOUND);
 
         requestSpecification.auth().oauth2(token_all);
-        assertEquals(getRepo(DEFAULT_REPO_NAME), NOT_FOUND);
+        assertEquals(getRepo(DEFAULT_REPO_NAME), SC_NOT_FOUND);
 
     }
 
@@ -63,10 +63,10 @@ public class CreateRepoTest extends RequestConfiguration {
 
         requestSpecification.auth().oauth2(token_invalid);
 
-        assertEquals(postRepo(DEFAULT_REPO_NAME), UNAUTHORIZED);
+        assertEquals(postRepo(DEFAULT_REPO_NAME), SC_UNAUTHORIZED);
 
         requestSpecification.auth().oauth2(token_all);
-        assertEquals(getRepo(DEFAULT_REPO_NAME), NOT_FOUND);
+        assertEquals(getRepo(DEFAULT_REPO_NAME), SC_NOT_FOUND);
 
     }
 
@@ -77,7 +77,7 @@ public class CreateRepoTest extends RequestConfiguration {
         Repo repo = new Repo.RepoBuilder().
                 name(null).description("名称").isPrivate(true).build();
 
-        assertEquals(postRepo(repo), UNPROCESSABLE_ENTITY);
+        assertEquals(postRepo(repo), SC_UNPROCESSABLE_ENTITY);
 
     }
 
@@ -127,36 +127,36 @@ public class CreateRepoTest extends RequestConfiguration {
 
         postPrivateRepoStatus(DEFAULT_REPO_NAME);
 
-        assertEquals(postRepo(DEFAULT_REPO_NAME), UNPROCESSABLE_ENTITY);
+        assertEquals(postRepo(DEFAULT_REPO_NAME), SC_UNPROCESSABLE_ENTITY);
 
     }
 
 
     @Test
     void createRepoWithBrokenJsonFails() {
-        assertEquals(postRepoWithBrokenBodyStatus(DEFAULT_REPO_NAME), BAD_REQUEST);
-        assertEquals(getRepo(DEFAULT_REPO_NAME), NOT_FOUND);
+        assertEquals(postRepoWithBrokenBodyStatus(DEFAULT_REPO_NAME), SC_BAD_REQUEST);
+        assertEquals(getRepo(DEFAULT_REPO_NAME), SC_NOT_FOUND);
     }
 
 
     @Test(groups = "defaultCleanup")
     void createRepoNonExistingJsonFieldIgnored() {
 
-        assertEquals(postRepoWithNonExistingFieldStatus(DEFAULT_REPO_NAME), CREATED);
-        assertEquals(getRepo(DEFAULT_REPO_NAME), OK);
+        assertEquals(postRepoWithNonExistingFieldStatus(DEFAULT_REPO_NAME), SC_CREATED);
+        assertEquals(getRepo(DEFAULT_REPO_NAME), SC_OK);
 
     }
 
 
     @Test
     void createRepoWithPutFails() {
-        assertEquals(postRepoWithPutStatus(DEFAULT_REPO_NAME), NOT_FOUND);
+        assertEquals(postRepoWithPutStatus(DEFAULT_REPO_NAME), SC_NOT_FOUND);
     }
 
 
     @Test
     void createRepoWithPatchFails() {
-        assertEquals(postRepoWithPatchStatus(DEFAULT_REPO_NAME), NOT_FOUND);
+        assertEquals(postRepoWithPatchStatus(DEFAULT_REPO_NAME), SC_NOT_FOUND);
     }
 
 

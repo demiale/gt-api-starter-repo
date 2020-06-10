@@ -1,17 +1,17 @@
 package common.util;
 
-import common.constants.ResponseCode;
 import io.restassured.path.json.JsonPath;
 import io.restassured.specification.RequestSpecification;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static common.constants.HeaderParam.LINK;
 import static io.restassured.RestAssured.*;
 import static org.apache.http.HttpStatus.SC_OK;
 
 public final class ResultsRetriever {
+
+    static final String LINK = "link";
 
     public static <T> List<T> retrieveEntities(Class<T> type, RequestSpecification requestSpec, String endpointURI, int pageLimit) {
 
@@ -75,7 +75,7 @@ public final class ResultsRetriever {
                         .get(endpointURI)
 
                         .then()
-                        .assertThat().statusCode(ResponseCode.OK)
+                        .assertThat().statusCode(SC_OK)
                         .extract().response().asString();
 
         JsonPath responsePath = new JsonPath(response);
@@ -111,7 +111,7 @@ public final class ResultsRetriever {
                         .get(endpointURI)
 
                         .then()
-                        .assertThat().statusCode(ResponseCode.OK)
+                        .assertThat().statusCode(SC_OK)
                         .extract().response().header(LINK);
 
     }

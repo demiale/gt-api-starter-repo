@@ -5,20 +5,19 @@ import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.http.ContentType;
 import org.testng.annotations.BeforeMethod;
 
-import static common.config.CryptoUtils.decrypt;
-import static common.constants.HeaderParam.ACCEPT_API_VERSION;
+import static common.config.EncodeUtils.decode;
 import static common.config.RequestConfigUtils.props;
 import static io.restassured.RestAssured.oauth2;
 
 public class RequestConfiguration {
 
     public static final String user = props.getProperty("user");
-    public static final String password = decrypt(props.getProperty("password"));
-    public static final String token_all = decrypt(props.getProperty("token_all"));
-    public static final String token_private_repo = decrypt(props.getProperty("token_private_repo"));
-    public static final String token_public_repo = decrypt(props.getProperty("token_public_repo"));
-    public static final String token_delete_repo = decrypt(props.getProperty("token_delete_repo"));
-    public static final String token_no_public_repo = decrypt(props.getProperty("token_no_public_repo"));
+    public static final String password = decode(props.getProperty("password"));
+    public static final String token_all = decode(props.getProperty("token_all"));
+    public static final String token_private_repo = decode(props.getProperty("token_private_repo"));
+    public static final String token_public_repo = decode(props.getProperty("token_public_repo"));
+    public static final String token_delete_repo = decode(props.getProperty("token_delete_repo"));
+    public static final String token_no_public_repo = decode(props.getProperty("token_no_public_repo"));
 
     public static final String BASE_URI = props.getProperty("base_uri");
 
@@ -29,6 +28,8 @@ public class RequestConfiguration {
 
     public static final String URI_REPO_FROM_TEMPLATE = props.getProperty("uri_repo_from_template");
 
+    public static final String API_VERSION_3 = props.getProperty("api_version_3");
+
     public static final String DEFAULT_REPO_NAME = "dummy";
 
     @BeforeMethod
@@ -36,7 +37,7 @@ public class RequestConfiguration {
 
         RestAssured.requestSpecification =
                 new RequestSpecBuilder().setBaseUri(BASE_URI).setAuth(oauth2(token_all))
-                        .setAccept(ACCEPT_API_VERSION).setContentType(ContentType.JSON)
+                        .setAccept(API_VERSION_3).setContentType(ContentType.JSON)
                         .build();
 
     }
