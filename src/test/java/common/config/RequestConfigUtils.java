@@ -2,6 +2,7 @@ package common.config;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Objects;
 import java.util.Properties;
 
 
@@ -20,7 +21,7 @@ class RequestConfigUtils {
                         .getClassLoader().getResourceAsStream("requestConfig.properties");
         ) {
 
-            props.load(inputStream);
+            props.load(Objects.requireNonNull(inputStream));
 
         } catch (IOException e) {
             System.err.println("File does not exist");
