@@ -1,6 +1,6 @@
 package common.util;
 
-import entities.Repo;
+import com.demiale.starter.entities.Repo;
 
 import static common.config.RequestConfiguration.*;
 import static io.restassured.RestAssured.given;

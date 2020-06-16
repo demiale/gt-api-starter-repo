@@ -1,4 +1,4 @@
-package entities;
+package com.demiale.starter.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -11,9 +11,6 @@ import java.util.Map;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
-
-// TODO 10-Jun-2020 Rename to RepoStrict, add RepoLoose with all String fields, add abstract parent Repo
-// this will allow to add test for validating incorrect attr values
 
 public class Repo {
 

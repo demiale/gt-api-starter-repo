@@ -1,8 +1,11 @@
-package entities;
+package com.demiale.starter.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
+
+import java.net.MalformedURLException;
+import java.net.URL;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
@@ -11,7 +14,7 @@ public class User {
     private String login;
     private int id;
     private String nodeId;
-    private String url;
+    private URL url;
     private String type;
 
     public String getLogin() {
@@ -26,7 +29,7 @@ public class User {
         return nodeId;
     }
 
-    public String getUrl() {
+    public URL getUrl() {
         return url;
     }
 
@@ -49,9 +52,8 @@ public class User {
         return this;
     }
 
-    public User setUrl(String url) {
-        // TODO 15-Jun-2020 Validate url format
-        this.url = url;
+    public User setUrl(String url) throws MalformedURLException {
+        this.url = new URL(url);
         return this;
     }
 
