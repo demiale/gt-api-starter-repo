@@ -1,7 +1,7 @@
 package tests.repositories.lifecycle;
 
 import common.config.RequestConfiguration;
-import entities.Repo;
+import com.demiale.starter.entities.Repo;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
