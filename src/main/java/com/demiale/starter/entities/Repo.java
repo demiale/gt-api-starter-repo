@@ -105,7 +105,7 @@ public class Repo {
     }
 
     private void setPushedAt(String pushedAt) {
-        this.pushedAt = parseDateFromString(pushedAt);
+        this.pushedAt = pushedAt != null? parseDateFromString(pushedAt) : null;
     }
 
 

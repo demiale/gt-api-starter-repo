@@ -22,15 +22,12 @@ public class CreateRepoTest extends RequestConfiguration {
     private static int count = 1;
     private static final List<String> repoNames = new ArrayList<>();
 
-    private ITestContext context;
-
     @DataProvider
     Object[] repoNameProvider() {
-        return new Object[] {
+        return new Object[]{
             "repo_name", "456161", "https-api.github.com", "application-vnd.github.v3-json", "tr-nsfer"
         };
     }
-
 
 
     @Test(dataProvider = "repoNameProvider")
@@ -197,23 +194,15 @@ public class CreateRepoTest extends RequestConfiguration {
 
     @BeforeClass
     private void setupTestContext(ITestContext context) {
-        this.context = context;
-        this.context.setAttribute("repoNames", repoNames);
+        context.setAttribute("repoNames", repoNames);
     }
 
 
     @AfterClass(alwaysRun = true)
     void repoCleanup() {
 
-        Object attrValue = this.context.getAttribute("repoNames");
-
-        if (attrValue != null) {
-            List<String> repoNames = (List<String>) attrValue;
-
-            for (String name : repoNames) {
-                deleteRepo(name);
-            }
-
+        for (String name : repoNames) {
+            deleteRepo(name);
         }
 
     }
@@ -223,7 +212,6 @@ public class CreateRepoTest extends RequestConfiguration {
     }
 
     private void saveRepoNameIntoTestContext(String repoName) {
-        List<String> repoNames = (List<String>)this.context.getAttribute("repoNames");
         repoNames.add(repoName);
     }
 
