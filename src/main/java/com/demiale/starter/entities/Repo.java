@@ -105,13 +105,11 @@ public class Repo {
     }
 
     private void setPushedAt(String pushedAt) {
-        System.out.println("pushedAt: " + pushedAt);
         this.pushedAt = pushedAt != null? parseDateFromString(pushedAt) : null;
     }
 
 
     private LocalDateTime parseDateFromString(String strToParse) {
-        System.out.println("strToParse: " + strToParse);
         return LocalDateTime.parse(strToParse.substring(0, strToParse.length()-1), DateTimeFormatter.ISO_LOCAL_DATE_TIME);
     }
 
