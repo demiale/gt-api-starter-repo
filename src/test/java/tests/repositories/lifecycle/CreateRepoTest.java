@@ -10,6 +10,7 @@ import org.testng.annotations.Test;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import static common.util.RepoUtils.*;
 import static io.restassured.RestAssured.requestSpecification;
@@ -19,7 +20,7 @@ import static org.testng.Assert.*;
 
 public class CreateRepoTest extends RequestConfiguration {
 
-    private static int count = 1;
+    private static final Random rand = new Random(100);
     private static final List<String> repoNames = new ArrayList<>();
 
     @DataProvider
@@ -208,7 +209,7 @@ public class CreateRepoTest extends RequestConfiguration {
     }
 
     private String getDummyRepoName() {
-        return DEFAULT_REPO_NAME + count++;
+        return DEFAULT_REPO_NAME + rand.nextInt(100);
     }
 
     private void saveRepoNameIntoTestContext(String repoName) {

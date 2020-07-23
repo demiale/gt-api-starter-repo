@@ -40,6 +40,8 @@ public class RepoUtils {
 
     public static int getRepo(String repoName) {
 
+        pauseThread();
+
         return
                 given().log().all()
                         .get(URI_USER_SPECIFIC_REPO, user, repoName).then().extract().statusCode();
@@ -47,6 +49,8 @@ public class RepoUtils {
 
 
     public static Repo getRepoEntity(String repoName) {
+
+        pauseThread();
 
         return
                 given().log().all()
@@ -93,5 +97,12 @@ public class RepoUtils {
                         .post(URI_CURRENT_USER_REPO).then().extract().statusCode();
     }
 
+
+    private static void pauseThread() {
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+        }
+    }
 
 }
