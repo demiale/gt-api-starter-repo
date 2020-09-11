@@ -1,6 +1,8 @@
 package common.util;
 
 import com.demiale.starter.entities.Repo;
+import io.restassured.response.ExtractableResponse;
+import io.restassured.response.Response;
 
 import static common.config.RequestConfiguration.*;
 import static io.restassured.RestAssured.given;
@@ -40,21 +42,15 @@ public class RepoUtils {
 
     public static int getRepo(String repoName) {
 
-        pauseThread();
+        int responseCode = sendGetRequest(repoName).statusCode();
+        return responseCode == 200 ? responseCode : sendGetRequest(repoName).statusCode();
 
-        return
-                given().log().all()
-                        .get(URI_USER_SPECIFIC_REPO, user, repoName).then().extract().statusCode();
     }
 
 
     public static Repo getRepoEntity(String repoName) {
-
-        pauseThread();
-
-        return
-                given().log().all()
-                        .get(URI_USER_SPECIFIC_REPO, user, repoName).then().extract().response().as(Repo.class);
+        ExtractableResponse<Response> response = sendGetRequest(repoName);
+        return response.statusCode() == 200 ? response.as(Repo.class) : sendGetRequest(repoName).as(Repo.class);
     }
 
 
@@ -98,11 +94,9 @@ public class RepoUtils {
     }
 
 
-    private static void pauseThread() {
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-        }
+    private static ExtractableResponse<Response> sendGetRequest(String repoName) {
+        return given().log().all()
+                .get(URI_USER_SPECIFIC_REPO, user, repoName).then().extract();
     }
 
 }

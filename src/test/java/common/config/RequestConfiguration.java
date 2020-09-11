@@ -9,9 +9,9 @@ import static common.config.EncodeUtils.decode;
 import static common.config.RequestConfigUtils.props;
 import static io.restassured.RestAssured.oauth2;
 
-public class RequestConfiguration {
+public abstract class RequestConfiguration {
 
-    public static final String user = props.getProperty("user");
+    public static final String user = decode(props.getProperty("user"));
     public static final String password = decode(props.getProperty("password"));
     public static final String token_all = decode(props.getProperty("token_all"));
     public static final String token_private_repo = decode(props.getProperty("token_private_repo"));

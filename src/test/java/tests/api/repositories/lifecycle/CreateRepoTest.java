@@ -1,12 +1,9 @@
-package tests.repositories.lifecycle;
+package tests.api.repositories.lifecycle;
 
 import com.demiale.starter.entities.Repo;
 import common.config.RequestConfiguration;
 import org.testng.ITestContext;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.DataProvider;
-import org.testng.annotations.Test;
+import org.testng.annotations.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,9 +31,9 @@ public class CreateRepoTest extends RequestConfiguration {
     @Test(dataProvider = "repoNameProvider")
     void repoWithValidNameCreated(String repoName) {
 
-        assertEquals(postRepo(repoName), SC_CREATED);
-
         saveRepoNameIntoTestContext(repoName);
+
+        assertEquals(postRepo(repoName), SC_CREATED);
 
         assertEquals(getRepo(repoName), SC_OK);
 
@@ -170,9 +167,9 @@ public class CreateRepoTest extends RequestConfiguration {
 
         String repoName = getDummyRepoName();
 
-        assertEquals(postRepoWithNonExistingFieldStatus(repoName), SC_CREATED);
-
         saveRepoNameIntoTestContext(repoName);
+
+        assertEquals(postRepoWithNonExistingFieldStatus(repoName), SC_CREATED);
 
         assertEquals(getRepo(repoName), SC_OK);
 
@@ -194,12 +191,11 @@ public class CreateRepoTest extends RequestConfiguration {
 
 
     @BeforeClass
-    private void setupTestContext(ITestContext context) {
+    private void updateTestContext(ITestContext context) {
         context.setAttribute("repoNames", repoNames);
     }
 
-
-    @AfterClass(alwaysRun = true)
+    @AfterClass
     void repoCleanup() {
 
         for (String name : repoNames) {
@@ -208,6 +204,7 @@ public class CreateRepoTest extends RequestConfiguration {
 
     }
 
+    // TODO Move to RepoUtils + add a map containing all existing names and do lookup to ensure no name conflicts can occur
     private String getDummyRepoName() {
         return DEFAULT_REPO_NAME + rand.nextInt(100);
     }
@@ -215,7 +212,6 @@ public class CreateRepoTest extends RequestConfiguration {
     private void saveRepoNameIntoTestContext(String repoName) {
         repoNames.add(repoName);
     }
-
 
 }
 
