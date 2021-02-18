@@ -17,7 +17,7 @@
         <assertj-core.version>3.15.0</assertj-core.version>
         <rest-assured.version>4.3.0</rest-assured.version>
         <jackson-core.version>2.10.3</jackson-core.version>
-        <jackson-databind.version>2.10.3</jackson-databind.version>
+        <jackson-databind.version>2.10.5.1</jackson-databind.version>
         <commons-httpcore.version>4.4.13</commons-httpcore.version>
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
